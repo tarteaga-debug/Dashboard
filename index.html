@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Sewing Research Command Center</title>
+  <meta name="description" content="A research command center dashboard for AI-assisted sewing patternmaking — tracking sources, prompts, experiments, and progress." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">✦</div>
+      <div class="sidebar-title">RESEARCH<br/>COMMAND CENTER</div>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="nav-item active" data-section="overview">
+        <span class="nav-icon">◈</span>
+        <span class="nav-label">Project Overview</span>
+      </li>
+      <li class="nav-item" data-section="library">
+        <span class="nav-icon">◉</span>
+        <span class="nav-label">Reading Library</span>
+      </li>
+      <li class="nav-item" data-section="weekly">
+        <span class="nav-icon">◈</span>
+        <span class="nav-label">Weekly Plan</span>
+      </li>
+      <li class="nav-item" data-section="prompts">
+        <span class="nav-icon">◎</span>
+        <span class="nav-label">Prompt Log</span>
+      </li>
+      <li class="nav-item" data-section="experiments">
+        <span class="nav-icon">◉</span>
+        <span class="nav-label">Experiment Log</span>
+      </li>
+      <li class="nav-item" data-section="links">
+        <span class="nav-icon">◈</span>
+        <span class="nav-label">Links</span>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-date" id="currentDate"></div>
+      <div class="sidebar-tagline">AI × SEWING × RESEARCH</div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- ═══════════════ PROJECT OVERVIEW ═══════════════ -->
+    <section class="content-section active" id="section-overview">
+      <div class="section-header">
+        <h1 class="section-title">Project Overview</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">AI-Assisted Sewing Patternmaking Research</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="overview-grid">
+        <div class="luxury-card overview-card">
+          <label class="field-label">PROJECT FOCUS</label>
+          <textarea id="ov-focus" class="luxury-textarea" placeholder="Describe the core focus of this research project…" rows="3"></textarea>
+        </div>
+        <div class="luxury-card overview-card">
+          <label class="field-label">RESEARCH QUESTION</label>
+          <textarea id="ov-question" class="luxury-textarea" placeholder="What central question is this project answering?" rows="3"></textarea>
+        </div>
+        <div class="luxury-card overview-card">
+          <label class="field-label">GOALS</label>
+          <textarea id="ov-goals" class="luxury-textarea" placeholder="List your key research goals…" rows="4"></textarea>
+        </div>
+        <div class="luxury-card overview-card">
+          <label class="field-label">FINAL DELIVERABLE</label>
+          <textarea id="ov-deliverable" class="luxury-textarea" placeholder="Describe what the final deliverable will look like…" rows="4"></textarea>
+        </div>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="luxury-card progress-card">
+        <div class="progress-header">
+          <label class="field-label">OVERALL RESEARCH PROGRESS</label>
+          <span class="progress-value" id="progressValue">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <input type="range" id="progressSlider" min="0" max="100" value="0" class="progress-slider" />
+      </div>
+
+      <div class="status-grid">
+        <div class="luxury-card status-card">
+          <label class="field-label">RESEARCH STATUS</label>
+          <select id="ov-status" class="luxury-select">
+            <option value="planning">Planning</option>
+            <option value="active">Actively Researching</option>
+            <option value="writing">Writing / Synthesizing</option>
+            <option value="review">Under Review</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+        <div class="luxury-card status-card">
+          <label class="field-label">CURRENT PHASE</label>
+          <input type="text" id="ov-phase" class="luxury-input" placeholder="e.g. Week 7 — Prototyping" />
+        </div>
+        <div class="luxury-card status-card">
+          <label class="field-label">DEADLINE</label>
+          <input type="date" id="ov-deadline" class="luxury-input" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ READING LIBRARY ═══════════════ -->
+    <section class="content-section" id="section-library">
+      <div class="section-header">
+        <h1 class="section-title">Reading Library</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">Research sources, articles, and references</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="lib-controls">
+        <button class="btn-gold" id="addSourceBtn">+ Add Source</button>
+        <div class="lib-filters">
+          <select class="luxury-select filter-select" id="filterStatus">
+            <option value="all">All Statuses</option>
+            <option value="unread">Unread</option>
+            <option value="reading">Reading</option>
+            <option value="summarized">Summarized</option>
+          </select>
+          <input type="text" class="luxury-input filter-input" id="filterTag" placeholder="Filter by tag…" />
+        </div>
+      </div>
+
+      <div class="sources-grid" id="sourcesGrid">
+        <!-- Source cards rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══════════════ WEEKLY PLAN ═══════════════ -->
+    <section class="content-section" id="section-weekly">
+      <div class="section-header">
+        <h1 class="section-title">Weekly Plan</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">Milestones from Week 5 through Week 11</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="timeline-bar">
+        <div class="timeline-fill" id="timelineFill"></div>
+      </div>
+      <div class="timeline-labels">
+        <span>W5</span><span>W6</span><span>W7</span><span>W8</span><span>W9</span><span>W10</span><span>W11</span>
+      </div>
+
+      <div class="weeks-grid" id="weeksGrid">
+        <!-- Week cards rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══════════════ PROMPT LOG ═══════════════ -->
+    <section class="content-section" id="section-prompts">
+      <div class="section-header">
+        <h1 class="section-title">Prompt Log</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">AI experimentation — prompts, models, and outputs</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="log-controls">
+        <button class="btn-gold" id="addPromptBtn">+ New Prompt Entry</button>
+      </div>
+
+      <div class="prompts-list" id="promptsList">
+        <!-- Prompt cards rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══════════════ EXPERIMENT LOG ═══════════════ -->
+    <section class="content-section" id="section-experiments">
+      <div class="section-header">
+        <h1 class="section-title">Experiment Log</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">Hands-on experiments, outcomes, and next steps</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="log-controls">
+        <button class="btn-gold" id="addExperimentBtn">+ New Experiment</button>
+      </div>
+
+      <div class="experiments-list" id="experimentsList">
+        <!-- Experiment cards rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══════════════ LINKS ═══════════════ -->
+    <section class="content-section" id="section-links">
+      <div class="section-header">
+        <h1 class="section-title">Quick Links</h1>
+        <div class="gold-rule"></div>
+        <p class="section-subtitle">Curated resources and tool access</p>
+      </div>
+
+      <div class="zebra-divider"></div>
+
+      <div class="links-controls">
+        <button class="btn-gold" id="addLinkBtn">+ Add Link</button>
+        <div class="link-category-tabs" id="linkCategoryTabs">
+          <button class="tab-btn active" data-cat="all">All</button>
+          <button class="tab-btn" data-cat="Milanote">Milanote</button>
+          <button class="tab-btn" data-cat="GitHub">GitHub</button>
+          <button class="tab-btn" data-cat="Research">Research</button>
+          <button class="tab-btn" data-cat="AI Tools">AI Tools</button>
+          <button class="tab-btn" data-cat="Design">Design</button>
+        </div>
+      </div>
+
+      <div class="links-grid" id="linksGrid">
+        <!-- Link cards rendered by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════ MODALS ═══════════════ -->
+
+  <!-- Source Modal -->
+  <div class="modal-overlay" id="sourceModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="sourceModalTitle">Add Source</h2>
+        <button class="modal-close" id="closeSourceModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">TITLE *</label>
+        <input type="text" class="luxury-input" id="src-title" placeholder="Source title" />
+        <label class="field-label">AUTHOR</label>
+        <input type="text" class="luxury-input" id="src-author" placeholder="Author name" />
+        <label class="field-label">LINK / URL</label>
+        <input type="url" class="luxury-input" id="src-link" placeholder="https://…" />
+        <label class="field-label">TAGS (comma separated)</label>
+        <input type="text" class="luxury-input" id="src-tags" placeholder="e.g. pattern, AI, draping" />
+        <label class="field-label">STATUS</label>
+        <select class="luxury-select" id="src-status">
+          <option value="unread">Unread</option>
+          <option value="reading">Reading</option>
+          <option value="summarized">Summarized</option>
+        </select>
+        <label class="field-label">NOTES</label>
+        <textarea class="luxury-textarea" id="src-notes" rows="4" placeholder="Key takeaways, quotes, thoughts…"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cancelSourceModal">Cancel</button>
+        <button class="btn-gold" id="saveSourceBtn">Save Source</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt Modal -->
+  <div class="modal-overlay" id="promptModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="promptModalTitle">New Prompt Entry</h2>
+        <button class="modal-close" id="closePromptModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">PROMPT TEXT *</label>
+        <textarea class="luxury-textarea" id="pr-prompt" rows="4" placeholder="The exact prompt you sent to the AI…"></textarea>
+        <label class="field-label">MODEL USED</label>
+        <input type="text" class="luxury-input" id="pr-model" placeholder="e.g. GPT-4o, Claude 3.5, Gemini 1.5" />
+        <label class="field-label">OUTPUT SUMMARY</label>
+        <textarea class="luxury-textarea" id="pr-output" rows="3" placeholder="What did the AI respond with?" />
+        <label class="field-label">WHAT I CHANGED NEXT</label>
+        <textarea class="luxury-textarea" id="pr-next" rows="2" placeholder="Your next iteration or takeaway…"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cancelPromptModal">Cancel</button>
+        <button class="btn-gold" id="savePromptBtn">Save Entry</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experiment Modal -->
+  <div class="modal-overlay" id="experimentModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="experimentModalTitle">New Experiment</h2>
+        <button class="modal-close" id="closeExperimentModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">EXPERIMENT TITLE *</label>
+        <input type="text" class="luxury-input" id="exp-title" placeholder="Short descriptive title" />
+        <label class="field-label">WHAT I TRIED</label>
+        <textarea class="luxury-textarea" id="exp-tried" rows="3" placeholder="Describe what you attempted…"></textarea>
+        <label class="field-label">SCREENSHOT (optional)</label>
+        <input type="file" class="luxury-file" id="exp-screenshot" accept="image/*" />
+        <label class="field-label">OUTCOME</label>
+        <textarea class="luxury-textarea" id="exp-outcome" rows="3" placeholder="What happened? What worked, what didn't?" ></textarea>
+        <label class="field-label">NEXT STEP</label>
+        <textarea class="luxury-textarea" id="exp-next" rows="2" placeholder="What will you try next?" ></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cancelExperimentModal">Cancel</button>
+        <button class="btn-gold" id="saveExperimentBtn">Save Experiment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Link Modal -->
+  <div class="modal-overlay" id="linkModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title" id="linkModalTitle">Add Link</h2>
+        <button class="modal-close" id="closeLinkModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label">TITLE *</label>
+        <input type="text" class="luxury-input" id="lnk-title" placeholder="Link title" />
+        <label class="field-label">URL *</label>
+        <input type="url" class="luxury-input" id="lnk-url" placeholder="https://…" />
+        <label class="field-label">CATEGORY</label>
+        <select class="luxury-select" id="lnk-category">
+          <option value="Milanote">Milanote</option>
+          <option value="GitHub">GitHub</option>
+          <option value="Research">Research</option>
+          <option value="AI Tools">AI Tools</option>
+          <option value="Design">Design</option>
+          <option value="Other">Other</option>
+        </select>
+        <label class="field-label">SHORT DESCRIPTION</label>
+        <input type="text" class="luxury-input" id="lnk-desc" placeholder="Brief description of this link…" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cancelLinkModal">Cancel</button>
+        <button class="btn-gold" id="saveLinkBtn">Save Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-box modal-box--sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Confirm Delete</h2>
+        <button class="modal-close" id="closeConfirmModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">Are you sure you want to delete this entry? This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" id="cancelDeleteBtn">Cancel</button>
+        <button class="btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
